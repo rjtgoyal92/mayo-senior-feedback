@@ -230,9 +230,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
     <div class="success-icon">🎉</div>
     <div class="success-title">Thank You!</div>
     <div class="success-sub" id="success-msg">Your feedback has been submitted successfully.</div>
-    <button class="btn btn-gold" onclick="rateAnother()">Rate Another Educator →</button>
+    <div id="success-remaining"></div>
+    <div id="success-remaining"></div>
+    <button class="btn btn-gold" id="next-edu-btn" onclick="rateAnother()">Rate Another Educator →</button>
     &nbsp;
-    <button class="btn btn-secondary" style="margin-top:10px;" onclick="startFresh()">Done — Start Over</button>
+    <button class="btn btn-secondary" id="alldone-btn" style="margin-top:10px;" onclick="startFresh()">Done — Start Over</button>
   </div>
 </div>
 
@@ -695,8 +697,10 @@ function startFresh(){
   currentStudent = null;
   selectedEducator = null;
   answers = {};
-  document.getElementById('student-search').value='';
-  document.getElementById('student-results').style.display='none';
+  document.getElementById('student-search').val  goStep('step-welcome');
+}
+
+// ─── UTILITIESults').style.display='none';
   goStep('step-student');
 }
 
