@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="vaewport" content="width=device-width, initial-scale=1.0">
 <title>Mayo College – Teacher Feedback (Grades 8–11)</title>
 <style>
 :root{--maroon:#6B1A2A;--gold:#C9A84C;--bg:#F8F4EF;--card:#fff;--text:#1E1E1E;--muted:#666;--border:#DDD3C0;--accent:#FEF9F0;}
@@ -97,12 +98,12 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 .err-msg{background:#FFF0F0;border:2px solid #F5C6CB;color:#721c24;border-radius:8px;padding:12px 16px;font-size:.88rem;margin-top:12px;display:none;}
 .err-msg.show{display:block;}
 
-/* Review */
-.review-table{width:100%;border-collapse:collapse;font-size:.88rem;}
-.review-table td{padding:6px 10px;border-bottom:1px solid #f0ead8;}
-.review-table td:first-child{color:var(--muted);width:30%;}
-.review-table td:last-child{font-weight:600;}
-.review-open{background:#fafafa;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:.85rem;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:4px;}
+/* Revaew */
+.revaew-table{width:100%;border-collapse:collapse;font-size:.88rem;}
+.revaew-table td{padding:6px 10px;border-bottom:1px solid #f0ead8;}
+.revaew-table td:first-child{color:var(--muted);width:30%;}
+.revaew-table td:last-child{font-weight:600;}
+.revaew-open{background:#fafafa;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:.85rem;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:4px;}
 
 /* Success */
 .success-card{text-align:center;padding:36px 24px;}
@@ -206,254 +207,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
   <div class="err-msg" id="err-questions">Please answer all questions before continuing.</div>
   <div class="btn-row">
     <button class="btn btn-secondary" onclick="goStep('step-educator')">← My Educator List</button>
-    <button class="btn btn-primary" onclick="goReview()">Review & Submit →</button>
+    <button class="btn btn-primary" onclick="goRevaew()">Revaew & Submit →</button>
   </div>
 </div>
 
-<!-- STEP 5: Review -->
-<div class="step" id="step-review">
+<!-- STEP 5: Revaew -->
+<div class="step" id="step-revaew">
   <div class="progress-wrap" id="prog-5"></div>
   <div class="card">
-    <div class="card-title">Review Your Responses</div>
-    <div id="review-content"></div>
-    <div class="btn-row">
-      <button class="btn btn-secondary" onclick="goStep('step-questions')">← Edit Answers</button>
-      <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">Submit Feedback ✓</button>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 6: Success -->
-<div class="step" id="step-success">
-  <div class="card success-card">
-    <div class="success-icon">✅</div>
-    <div class="success-title">Submitted!</div>
-    <div class="success-sub" id="success-msg">Your feedback has been submitted.</div>
-    <div id="success-remaining"></div>
-    <div class="btn-row" style="justify-content:center;margin-top:20px;">
-      <button class="btn btn-primary" id="next-edu-btn" onclick="rateAnother()" style="display:none;">Rate Next Educator →</button>
-      <button class="btn btn-gold" id="alldone-btn" onclick="startFresh()" style="display:none;">🎉 All Done!</button>
-      <button class="btn btn-secondary" onclick="startFresh()">Different Student</button>
-    </div>
-  </div>
-</div>ml>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mayo College – Teacher Feedback (Grades 8–11)</title>
-<style>
-:root{--maroon:#6B1A2A;--gold:#C9A84C;--bg:#F8F4EF;--card:#fff;--text:#1E1E1E;--muted:#666;--border:#DDD3C0;--accent:#FEF9F0;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 60px;}
-.page-header{background:var(--maroon);color:#fff;padding:22px 24px 18px;border-bottom:5px solid var(--gold);text-align:center;}
-.page-header .crest{font-size:2rem;margin-bottom:6px;}
-.page-header h1{font-size:1.45rem;font-weight:700;}
-.page-header .sub{font-size:.88rem;opacity:.85;margin-top:4px;}
-.grade-badge{display:inline-block;background:var(--gold);color:var(--maroon);font-weight:700;font-size:.82rem;padding:3px 14px;border-radius:20px;margin-top:10px;}
-
-.container{max-width:720px;margin:0 auto;padding:20px 16px;}
-.step{display:none;}
-.step.active{display:block;}
-
-/* Progress */
-.progress-wrap{display:flex;justify-content:center;gap:10px;margin-bottom:24px;align-items:center;}
-.prog-dot{width:12px;height:12px;border-radius:50%;background:#DDD;transition:background .3s;}
-.prog-dot.done{background:var(--gold);}
-.prog-dot.active{background:var(--maroon);width:16px;height:16px;}
-
-/* Cards */
-.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 20px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
-.card-title{font-size:.7rem;font-weight:700;color:var(--maroon);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;}
-
-/* Search */
-.search-box{width:100%;border:2px solid var(--border);border-radius:8px;padding:13px 16px;font-size:1rem;font-family:inherit;outline:none;background:#fafafa;}
-.search-box:focus{border-color:var(--gold);}
-.search-results{margin-top:8px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;display:none;max-height:260px;overflow-y:auto;}
-.search-item{padding:12px 16px;cursor:pointer;border-bottom:1px solid #f0ead8;background:#fff;transition:background .15s;}
-.search-item:hover{background:#FFF8E1;}
-.search-item:last-child{border-bottom:none;}
-.search-item .s-name{font-weight:600;font-size:.95rem;}
-.search-item .s-info{font-size:.78rem;color:var(--muted);margin-top:2px;}
-
-/* Student card */
-.student-confirmed{background:linear-gradient(135deg,var(--maroon),#8a2236);color:#fff;border-radius:10px;padding:18px 20px;margin-bottom:16px;}
-.student-confirmed .sc-name{font-size:1.15rem;font-weight:700;margin-bottom:4px;}
-.student-confirmed .sc-info{font-size:.85rem;opacity:.88;}
-.student-confirmed .sc-badge{display:inline-block;background:var(--gold);color:var(--maroon);font-size:.75rem;font-weight:700;padding:2px 12px;border-radius:20px;margin-top:8px;}
-
-/* Educator list */
-.edu-section-label{font-size:.72rem;font-weight:700;color:var(--maroon);text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;}
-.edu-btn{display:block;width:100%;text-align:left;padding:11px 16px;margin-bottom:7px;border:2px solid var(--border);border-radius:8px;background:#fafafa;cursor:pointer;font-size:.93rem;font-family:inherit;color:var(--text);transition:all .15s;}
-.edu-btn:hover{background:#FFF8E1;border-color:var(--gold);}
-.edu-btn .edu-type{font-size:.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:1px;}
-
-/* Questions */
-.q-section-hdr{background:var(--maroon);color:var(--gold);font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;border-radius:8px 8px 0 0;margin-top:18px;}
-.q-section-desc{background:var(--accent);border:1px solid var(--border);border-top:none;padding:8px 18px;font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:2px;}
-.question-card{background:var(--card);border:1px solid var(--border);border-top:none;padding:18px 20px;}
-.question-card+.question-card{border-top:1px solid #f0ead8;}
-.q-num{font-size:.68rem;font-weight:700;color:var(--maroon);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-.q-text{font-size:.97rem;font-weight:600;color:var(--text);margin-bottom:14px;line-height:1.5;}
-
-/* Likert */
-.likert{display:flex;gap:0;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;}
-.likert-opt{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px 8px;cursor:pointer;background:#fafafa;border-right:1px solid var(--border);transition:background .15s;}
-.likert-opt:last-child{border-right:none;}
-.likert-opt:hover{background:#FFF8E1;}
-.likert-opt.selected{background:var(--maroon);color:#fff;}
-.likert-opt.selected .l-num{color:#fff;}
-.likert-opt.selected .l-desc{color:rgba(255,255,255,.8);}
-.l-num{font-size:1.1rem;font-weight:700;color:var(--maroon);}
-.l-desc{font-size:.6rem;color:var(--muted);text-align:center;margin-top:3px;line-height:1.2;font-weight:500;}
-
-/* MCQ */
-.mcq-wrap{display:flex;flex-direction:column;gap:8px;}
-.mcq-opt{display:flex;align-items:flex-start;gap:12px;padding:10px 14px;border:2px solid var(--border);border-radius:7px;cursor:pointer;background:#fafafa;transition:all .15s;font-size:.92rem;line-height:1.4;}
-.mcq-opt:hover{background:#FFF8E1;border-color:var(--gold);}
-.mcq-opt.selected{background:var(--maroon);color:#fff;border-color:var(--maroon);}
-.mcq-dot{width:16px;height:16px;border:2px solid #bbb;border-radius:50%;flex-shrink:0;margin-top:2px;transition:all .15s;}
-.mcq-opt.selected .mcq-dot{border-color:#fff;background:#fff;}
-
-/* Open text */
-.open-wrap textarea{width:100%;min-height:100px;border:2px solid var(--border);border-radius:8px;padding:12px 14px;font-size:.93rem;font-family:inherit;resize:vertical;outline:none;background:#fafafa;line-height:1.5;}
-.open-wrap textarea:focus{border-color:var(--gold);}
-.open-wrap .hint{font-size:.73rem;color:var(--muted);margin-top:5px;}
-.open-wrap.optional .q-num::after{content:" — Optional";color:var(--muted);font-style:italic;}
-
-/* Buttons */
-.btn{display:inline-block;padding:12px 32px;border-radius:8px;font-size:.97rem;font-weight:700;border:none;cursor:pointer;font-family:inherit;letter-spacing:.3px;transition:background .2s;}
-.btn-primary{background:var(--maroon);color:#fff;}
-.btn-primary:hover{background:#8a2236;}
-.btn-secondary{background:#fff;color:var(--maroon);border:2px solid var(--maroon);}
-.btn-secondary:hover{background:#f9f0f0;}
-.btn-gold{background:var(--gold);color:var(--maroon);}
-.btn-gold:hover{background:#b8943b;}
-.btn-row{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap;}
-
-/* Error */
-.err-msg{background:#FFF0F0;border:2px solid #F5C6CB;color:#721c24;border-radius:8px;padding:12px 16px;font-size:.88rem;margin-top:12px;display:none;}
-.err-msg.show{display:block;}
-
-/* Review */
-.review-table{width:100%;border-collapse:collapse;font-size:.88rem;}
-.review-table td{padding:6px 10px;border-bottom:1px solid #f0ead8;}
-.review-table td:first-child{color:var(--muted);width:30%;}
-.review-table td:last-child{font-weight:600;}
-.review-open{background:#fafafa;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:.85rem;color:var(--text);white-space:pre-wrap;word-break:break-word;margin-top:4px;}
-
-/* Success */
-.success-card{text-align:center;padding:36px 24px;}
-.success-icon{font-size:3rem;margin-bottom:12px;}
-.success-title{font-size:1.35rem;font-weight:700;color:var(--maroon);margin-bottom:8px;}
-.success-sub{font-size:.92rem;color:var(--muted);margin-bottom:24px;line-height:1.6;}
-
-/* Confidential box */
-.private-box{background:#EEF2FF;border-left:4px solid #3B5BDB;padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:14px;font-size:.85rem;color:#2d3a72;line-height:1.6;}
-
-/* Note box */
-.note-box{background:#EEF2FF;border-left:4px solid #3B5BDB;padding:12px 16px;font-size:.85rem;color:#2d3a72;border-radius:0 8px 8px 0;margin-bottom:20px;}
-
-
-/* Assigned educator checklist */
-.assign-progress{margin-bottom:18px;}
-.assign-prog-bar{height:10px;background:#e8e0d0;border-radius:5px;overflow:hidden;margin-bottom:7px;}
-.assign-prog-fill{height:100%;background:var(--maroon);border-radius:5px;transition:width .4s;}
-.assign-prog-text{font-size:.78rem;color:var(--muted);text-align:right;font-weight:600;}
-.assign-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:2px solid var(--border);border-radius:10px;margin-bottom:10px;background:#fafafa;gap:12px;transition:all .2s;}
-.assign-item.assign-done{background:#f0f8f0;border-color:#a8d5a2;}
-.assign-item-info{flex:1;min-width:0;}
-.assign-item-type{font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;}
-.assign-item-name{font-size:.97rem;font-weight:600;color:var(--text);}
-.assign-done .assign-item-name{color:#2d6a2d;}
-.assign-check{color:#2d6a2d;font-weight:700;font-size:.9rem;white-space:nowrap;}
-.assign-btn{padding:9px 18px;font-size:.88rem;white-space:nowrap;}
-.assign-complete{background:#f0f8f0;border:2px solid #a8d5a2;border-radius:10px;padding:18px;text-align:center;font-size:.95rem;color:#2d6a2d;font-weight:600;margin-top:10px;}
-.assign-note{font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.6;padding:10px 14px;background:var(--accent);border-radius:8px;border:1px solid var(--border);}
-.remaining-list{text-align:left;margin:14px 0;font-size:.88rem;}
-.remaining-list .rem-item{padding:6px 0;border-bottom:1px solid #f0ead8;color:var(--text);}
-.remaining-list .rem-item:last-child{border-bottom:none;}
-@media(max-width:520px){
-  .likert-opt .l-desc{font-size:.54rem;}
-  .btn{padding:11px 22px;}
-}
-</style>
-</head>
-<body>
-
-<div class="page-header">
-  <div class="crest">🏛️</div>
-  <h1>Mayo College – Teacher Feedback</h1>
-  <div class="sub">A confidential survey to help us support our teachers and improve your experience</div>
-  <div class="grade-badge">Grades 8 – 11 · Academic Year 2025–26</div>
-</div>
-
-<div class="container">
-
-<!-- STEP 1: Welcome -->
-<div class="step active" id="step-welcome">
-  <div class="progress-wrap" id="prog-1"></div>
-  <div class="card">
-    <div class="card-title">Before You Begin</div>
-    <div class="note-box">
-      📋 <strong>Please read carefully:</strong> Your responses are completely <strong>confidential</strong> and will <em>not</em> be shared with the teacher directly. They will be used collectively to support staff development. There are no right or wrong answers — only honest ones.
-    </div>
-    <ul style="font-size:.92rem;line-height:2;padding-left:20px;color:var(--text);">
-      <li>Answer all questions <strong>honestly and thoughtfully</strong></li>
-      <li>You will submit <strong>one form per teacher or tutor</strong></li>
-      <li>Open-ended answers are especially valuable — please write in full sentences</li>
-      <li>The final question is a <strong>private message to the Principal</strong> — it is optional</li>
-    </ul>
-    <div class="btn-row">
-      <button class="btn btn-primary" onclick="goStep('step-student')">Begin →</button>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 2: Student Identification -->
-<div class="step" id="step-student">
-  <div class="progress-wrap" id="prog-2"></div>
-  <div class="card">
-    <div class="card-title">Who Are You?</div>
-    <p style="font-size:.9rem;color:var(--muted);margin-bottom:14px;">Type your <strong>admission number</strong> or <strong>name</strong> to find yourself in the list.</p>
-    <input type="text" class="search-box" id="student-search" placeholder="e.g. 3951 or Aarav..." oninput="searchStudent(this.value)" autocomplete="off">
-    <div class="search-results" id="student-results"></div>
-    <div class="err-msg" id="err-student">Please select your name from the list above.</div>
-  </div>
-</div>
-
-<!-- STEP 3: Assigned Educators Checklist -->
-<div class="step" id="step-educator">
-  <div class="progress-wrap" id="prog-3"></div>
-  <div id="student-confirmed-card"></div>
-  <div class="card">
-    <div class="card-title" id="educator-list-title">Your Assigned Educators</div>
-    <div class="assign-note">📌 The system has pre-assigned you <strong>4 teachers</strong> and <strong>1 house tutor</strong> to evaluate. Click <em>Rate Now</em> for each one.</div>
-    <div id="educator-list"></div>
-  </div>
-  <div class="btn-row">
-    <button class="btn btn-secondary" onclick="startFresh()">← Different Student</button>
-  </div>
-</div>
-
-<!-- STEP 4: Questions -->
-<div class="step" id="step-questions">
-  <div class="progress-wrap" id="prog-4"></div>
-  <div id="eval-header-card"></div>
-  <div id="questions-container"></div>
-  <div class="err-msg" id="err-questions">Please answer all questions before continuing.</div>
-  <div class="btn-row">
-    <button class="btn btn-secondary" onclick="goStep('step-educator')">← My Educator List</button>
-    <button class="btn btn-primary" onclick="goReview()">Review & Submit →</button>
-  </div>
-</div>
-
-<!-- STEP 5: Review -->
-<div class="step" id="step-review">
-  <div class="progress-wrap" id="prog-5"></div>
-  <div class="card">
-    <div class="card-title">Review Your Responses</div>
-    <div id="review-content"></div>
+    <div class="card-title">Revaew Your Responses</div>
+    <div id="revaew-content"></div>
     <div class="btn-row">
       <button class="btn btn-secondary" onclick="goStep('step-questions')">← Edit Answers</button>
       <button class="btn btn-primary" id="submit-btn" onclick="submitForm()">Submit Feedback ✓</button>
