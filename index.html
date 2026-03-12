@@ -464,7 +464,7 @@ function buildEducatorStep(){
 function selectEducator(name, type){
   selectedEducator = {name, type};
   answers = {};
-  document.getElementById('err-educator').classList.remove('show');
+  document.getElementById('err-educator')?.classList.remove('show');
   buildQuestionsStep();
   goStep('step-questions');
 }
